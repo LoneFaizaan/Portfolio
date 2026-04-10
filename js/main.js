@@ -2,142 +2,15 @@ const nav = document.getElementById('nav');
 const body = document.body;
 const hamburger = document.getElementById('hamburger');
 const mobileMenu = document.getElementById('mobileMenu');
-const entryOverlay = document.getElementById('entryOverlay');
-const enterSiteButton = document.getElementById('enterSiteButton');
-const audioToggle = document.getElementById('audioToggle');
-const mobileAudioToggle = document.getElementById('mobileAudioToggle');
-
-const AUDIO_STORAGE_KEY = 'portfolio-audio-muted';
-const YOUTUBE_API_SRC = 'https://www.youtube.com/iframe_api';
-const YOUTUBE_VIDEO_ID = '25N1pdzvp4c';
-const DEFAULT_VOLUME = 6;
-
-const audioState = {
-  hasEntered: false,
-  isMuted: localStorage.getItem(AUDIO_STORAGE_KEY) === 'true',
-  player: null,
-  playerReady: false,
-};
-
-let youtubeApiPromise;
 
 function syncBodyLock() {
-  const shouldLockBody =
-    (entryOverlay && !entryOverlay.classList.contains('hidden')) ||
-    mobileMenu.classList.contains('open');
-
-  body.classList.toggle('overlay-open', shouldLockBody);
+  body.classList.toggle('overlay-open', mobileMenu.classList.contains('open'));
 }
 
 function setMenuOpen(isOpen) {
   hamburger.classList.toggle('open', isOpen);
   mobileMenu.classList.toggle('open', isOpen);
   syncBodyLock();
-}
-
-function updateAudioButtons() {
-  [audioToggle, mobileAudioToggle].forEach((button) => {
-    if (!button) {
-      return;
-    }
-
-    button.textContent = audioState.isMuted ? 'Unmute Music' : 'Mute Music';
-    button.classList.toggle('is-muted', audioState.isMuted);
-    button.setAttribute('aria-pressed', String(audioState.isMuted));
-  });
-}
-
-function syncAudioPlayback() {
-  if (!audioState.playerReady || !audioState.player) {
-    return;
-  }
-
-  audioState.player.setVolume(DEFAULT_VOLUME);
-
-  if (audioState.hasEntered && !audioState.isMuted) {
-    audioState.player.unMute();
-  } else {
-    audioState.player.mute();
-  }
-
-  audioState.player.playVideo();
-}
-
-function toggleMute() {
-  audioState.isMuted = !audioState.isMuted;
-  localStorage.setItem(AUDIO_STORAGE_KEY, String(audioState.isMuted));
-  updateAudioButtons();
-  syncAudioPlayback();
-}
-
-function loadYouTubeApi() {
-  if (window.YT && window.YT.Player) {
-    return Promise.resolve(window.YT);
-  }
-
-  if (!youtubeApiPromise) {
-    youtubeApiPromise = new Promise((resolve) => {
-      const previousReady = window.onYouTubeIframeAPIReady;
-
-      window.onYouTubeIframeAPIReady = () => {
-        if (typeof previousReady === 'function') {
-          previousReady();
-        }
-
-        resolve(window.YT);
-      };
-
-      if (!document.querySelector(`script[src="${YOUTUBE_API_SRC}"]`)) {
-        const script = document.createElement('script');
-        script.src = YOUTUBE_API_SRC;
-        script.async = true;
-        document.head.appendChild(script);
-      }
-    });
-  }
-
-  return youtubeApiPromise;
-}
-
-function setupBackgroundTrack() {
-  loadYouTubeApi()
-    .then((YT) => {
-      if (audioState.player) {
-        return;
-      }
-
-      audioState.player = new YT.Player('youtubePlayer', {
-        width: '1',
-        height: '1',
-        videoId: YOUTUBE_VIDEO_ID,
-        playerVars: {
-          autoplay: 1,
-          controls: 0,
-          disablekb: 1,
-          fs: 0,
-          loop: 1,
-          modestbranding: 1,
-          playsinline: 1,
-          playlist: YOUTUBE_VIDEO_ID,
-          rel: 0,
-        },
-        events: {
-          onReady: (event) => {
-            audioState.playerReady = true;
-            syncAudioPlayback();
-            event.target.playVideo();
-          },
-          onStateChange: (event) => {
-            if (event.data === YT.PlayerState.ENDED) {
-              event.target.playVideo();
-            }
-          },
-        },
-      });
-    })
-    .catch(() => {
-      updateAudioButtons();
-    });
 }
 
 window.addEventListener('scroll', () => {
@@ -153,23 +26,6 @@ mobileMenu.querySelectorAll('a').forEach((link) => {
     setMenuOpen(false);
   });
 });
-
-if (audioToggle) {
-  audioToggle.addEventListener('click', toggleMute);
-}
-
-if (mobileAudioToggle) {
-  mobileAudioToggle.addEventListener('click', toggleMute);
-}
-
-if (enterSiteButton) {
-  enterSiteButton.addEventListener('click', () => {
-    audioState.hasEntered = true;
-    entryOverlay.classList.add('hidden');
-    syncBodyLock();
-    syncAudioPlayback();
-  });
-}
 
 const reveals = document.querySelectorAll('.reveal');
 const observer = new IntersectionObserver(
@@ -272,6 +128,4 @@ sections.forEach((section) => sectionObserver.observe(section));
   });
 })();
 
-updateAudioButtons();
 syncBodyLock();
-setupBackgroundTrack();
