@@ -1,75 +1,225 @@
-// Navbar scroll
 const nav = document.getElementById('nav');
+const body = document.body;
+const hamburger = document.getElementById('hamburger');
+const mobileMenu = document.getElementById('mobileMenu');
+const entryOverlay = document.getElementById('entryOverlay');
+const enterSiteButton = document.getElementById('enterSiteButton');
+const audioToggle = document.getElementById('audioToggle');
+const mobileAudioToggle = document.getElementById('mobileAudioToggle');
+
+const AUDIO_STORAGE_KEY = 'portfolio-audio-muted';
+const YOUTUBE_API_SRC = 'https://www.youtube.com/iframe_api';
+const YOUTUBE_VIDEO_ID = '25N1pdzvp4c';
+const DEFAULT_VOLUME = 6;
+
+const audioState = {
+  hasEntered: false,
+  isMuted: localStorage.getItem(AUDIO_STORAGE_KEY) === 'true',
+  player: null,
+  playerReady: false,
+};
+
+let youtubeApiPromise;
+
+function syncBodyLock() {
+  const shouldLockBody =
+    (entryOverlay && !entryOverlay.classList.contains('hidden')) ||
+    mobileMenu.classList.contains('open');
+
+  body.classList.toggle('overlay-open', shouldLockBody);
+}
+
+function setMenuOpen(isOpen) {
+  hamburger.classList.toggle('open', isOpen);
+  mobileMenu.classList.toggle('open', isOpen);
+  syncBodyLock();
+}
+
+function updateAudioButtons() {
+  [audioToggle, mobileAudioToggle].forEach((button) => {
+    if (!button) {
+      return;
+    }
+
+    button.textContent = audioState.isMuted ? 'Unmute Music' : 'Mute Music';
+    button.classList.toggle('is-muted', audioState.isMuted);
+    button.setAttribute('aria-pressed', String(audioState.isMuted));
+  });
+}
+
+function syncAudioPlayback() {
+  if (!audioState.playerReady || !audioState.player) {
+    return;
+  }
+
+  audioState.player.setVolume(DEFAULT_VOLUME);
+
+  if (audioState.hasEntered && !audioState.isMuted) {
+    audioState.player.unMute();
+  } else {
+    audioState.player.mute();
+  }
+
+  audioState.player.playVideo();
+}
+
+function toggleMute() {
+  audioState.isMuted = !audioState.isMuted;
+  localStorage.setItem(AUDIO_STORAGE_KEY, String(audioState.isMuted));
+  updateAudioButtons();
+  syncAudioPlayback();
+}
+
+function loadYouTubeApi() {
+  if (window.YT && window.YT.Player) {
+    return Promise.resolve(window.YT);
+  }
+
+  if (!youtubeApiPromise) {
+    youtubeApiPromise = new Promise((resolve) => {
+      const previousReady = window.onYouTubeIframeAPIReady;
+
+      window.onYouTubeIframeAPIReady = () => {
+        if (typeof previousReady === 'function') {
+          previousReady();
+        }
+
+        resolve(window.YT);
+      };
+
+      if (!document.querySelector(`script[src="${YOUTUBE_API_SRC}"]`)) {
+        const script = document.createElement('script');
+        script.src = YOUTUBE_API_SRC;
+        script.async = true;
+        document.head.appendChild(script);
+      }
+    });
+  }
+
+  return youtubeApiPromise;
+}
+
+function setupBackgroundTrack() {
+  loadYouTubeApi()
+    .then((YT) => {
+      if (audioState.player) {
+        return;
+      }
+
+      audioState.player = new YT.Player('youtubePlayer', {
+        width: '1',
+        height: '1',
+        videoId: YOUTUBE_VIDEO_ID,
+        playerVars: {
+          autoplay: 1,
+          controls: 0,
+          disablekb: 1,
+          fs: 0,
+          loop: 1,
+          modestbranding: 1,
+          playsinline: 1,
+          playlist: YOUTUBE_VIDEO_ID,
+          rel: 0,
+        },
+        events: {
+          onReady: (event) => {
+            audioState.playerReady = true;
+            syncAudioPlayback();
+            event.target.playVideo();
+          },
+          onStateChange: (event) => {
+            if (event.data === YT.PlayerState.ENDED) {
+              event.target.playVideo();
+            }
+          },
+        },
+      });
+    })
+    .catch(() => {
+      updateAudioButtons();
+    });
+}
+
 window.addEventListener('scroll', () => {
   nav.classList.toggle('scrolled', window.scrollY > 40);
 });
 
-// Hamburger
-const hamburger = document.getElementById('hamburger');
-const mobileMenu = document.getElementById('mobileMenu');
 hamburger.addEventListener('click', () => {
-  hamburger.classList.toggle('open');
-  mobileMenu.classList.toggle('open');
-  document.body.style.overflow = mobileMenu.classList.contains('open') ? 'hidden' : '';
+  setMenuOpen(!mobileMenu.classList.contains('open'));
 });
-mobileMenu.querySelectorAll('a').forEach(link => {
+
+mobileMenu.querySelectorAll('a').forEach((link) => {
   link.addEventListener('click', () => {
-    hamburger.classList.remove('open');
-    mobileMenu.classList.remove('open');
-    document.body.style.overflow = '';
+    setMenuOpen(false);
   });
 });
 
-// Reveal on scroll
+if (audioToggle) {
+  audioToggle.addEventListener('click', toggleMute);
+}
+
+if (mobileAudioToggle) {
+  mobileAudioToggle.addEventListener('click', toggleMute);
+}
+
+if (enterSiteButton) {
+  enterSiteButton.addEventListener('click', () => {
+    audioState.hasEntered = true;
+    entryOverlay.classList.add('hidden');
+    syncBodyLock();
+    syncAudioPlayback();
+  });
+}
+
 const reveals = document.querySelectorAll('.reveal');
 const observer = new IntersectionObserver(
-  entries => entries.forEach(e => {
-    if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }
+  (entries) => entries.forEach((entry) => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      observer.unobserve(entry.target);
+    }
   }),
   { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
 );
-reveals.forEach(el => observer.observe(el));
+reveals.forEach((element) => observer.observe(element));
 
-// Active nav
 const sections = document.querySelectorAll('section[id]');
 const navLinks = document.querySelectorAll('.nav-links a');
 const sectionObserver = new IntersectionObserver(
-  entries => entries.forEach(e => {
-    if (e.isIntersecting) {
-      navLinks.forEach(a => a.classList.remove('active'));
-      const active = document.querySelector(`.nav-links a[href="#${e.target.id}"]`);
-      if (active) active.classList.add('active');
+  (entries) => entries.forEach((entry) => {
+    if (entry.isIntersecting) {
+      navLinks.forEach((anchor) => anchor.classList.remove('active'));
+      const activeLink = document.querySelector(`.nav-links a[href="#${entry.target.id}"]`);
+
+      if (activeLink) {
+        activeLink.classList.add('active');
+      }
     }
   }),
   { threshold: 0.4 }
 );
-sections.forEach(s => sectionObserver.observe(s));
-
-// ── Nail-pivot physics tilt ───────────────────────────────────────────────
-// The card rests balanced on a single pin at its center.
-// Cursor position relative to center determines which edge sinks.
-// Uses a simple spring simulation: current state chases a target each frame.
+sections.forEach((section) => sectionObserver.observe(section));
 
 (function () {
   const frame = document.querySelector('.hero-photo-frame');
-  if (!frame) return;
 
-  // Spring config — tweak these to taste
-  const MAX_TILT   = 9;      // max degrees of rotation in any direction
-  const STIFFNESS  = 0.10;   // how quickly it chases the target (0–1)
-  const DAMPING    = 0.72;   // how much velocity bleeds off each frame (0–1)
+  if (!frame) {
+    return;
+  }
 
-  let targetX = 0, targetY = 0;   // rotation angles we're chasing
-  let currentX = 0, currentY = 0; // current rendered angles
-  let velX = 0, velY = 0;         // spring velocity
+  const MAX_TILT = 9;
+  const STIFFNESS = 0.1;
+  const DAMPING = 0.72;
+
+  let targetX = 0;
+  let targetY = 0;
+  let currentX = 0;
+  let currentY = 0;
+  let velX = 0;
+  let velY = 0;
   let rafId = null;
-  let isHovering = false;
-
-  function lerp(a, b, t) { return a + (b - a) * t; }
 
   function tick() {
-    // Spring: acceleration = (target - current) * stiffness
-    // velocity = velocity * damping + acceleration
     const ax = (targetX - currentX) * STIFFNESS;
     const ay = (targetY - currentY) * STIFFNESS;
     velX = velX * DAMPING + ax;
@@ -80,7 +230,6 @@ sections.forEach(s => sectionObserver.observe(s));
     frame.style.transform =
       `perspective(600px) rotateX(${currentX.toFixed(3)}deg) rotateY(${currentY.toFixed(3)}deg)`;
 
-    // Keep animating until fully settled
     const settled =
       Math.abs(currentX - targetX) < 0.01 &&
       Math.abs(currentY - targetY) < 0.01 &&
@@ -101,19 +250,18 @@ sections.forEach(s => sectionObserver.observe(s));
   }
 
   function startTick() {
-    if (!rafId) rafId = requestAnimationFrame(tick);
+    if (!rafId) {
+      rafId = requestAnimationFrame(tick);
+    }
   }
 
-  frame.addEventListener('mousemove', (e) => {
+  frame.addEventListener('mousemove', (event) => {
     const rect = frame.getBoundingClientRect();
-    // Normalised offset from center: -1 (top-left) to +1 (bottom-right)
-    const nx = ((e.clientX - rect.left) / rect.width  - 0.5) * 2;
-    const ny = ((e.clientY - rect.top)  / rect.height - 0.5) * 2;
+    const nx = ((event.clientX - rect.left) / rect.width - 0.5) * 2;
+    const ny = ((event.clientY - rect.top) / rect.height - 0.5) * 2;
 
-    // rotateX: negative when cursor is near bottom (bottom sinks → front tilts down)
-    // rotateY: positive when cursor is near right  (right sinks → front tilts right)
     targetX = -ny * MAX_TILT;
-    targetY =  nx * MAX_TILT;
+    targetY = nx * MAX_TILT;
     startTick();
   });
 
@@ -123,3 +271,7 @@ sections.forEach(s => sectionObserver.observe(s));
     startTick();
   });
 })();
+
+updateAudioButtons();
+syncBodyLock();
+setupBackgroundTrack();
