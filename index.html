@@ -25,6 +25,11 @@
       <li><a href="#about">About</a></li>
       <li><a href="#skills">Skills</a></li>
       <li><a href="#contact">Contact</a></li>
+      <li>
+        <button class="nav-audio-toggle" id="audioToggle" type="button" aria-pressed="false">
+          Mute Music
+        </button>
+      </li>
     </ul>
     <button class="hamburger" id="hamburger" aria-label="Menu">
       <span></span><span></span>
@@ -36,7 +41,23 @@
     <a href="#about">About</a>
     <a href="#skills">Skills</a>
     <a href="#contact">Contact</a>
+    <button class="mobile-audio-toggle" id="mobileAudioToggle" type="button" aria-pressed="false">
+      Mute Music
+    </button>
   </div>
+
+  <div class="entry-overlay" id="entryOverlay" aria-modal="true" role="dialog" aria-labelledby="entryTitle">
+    <div class="entry-panel">
+      <span class="entry-kicker">Portfolio entry</span>
+      <h1 class="entry-title" id="entryTitle">Step into the portfolio</h1>
+      <p class="entry-copy">
+        Background music will begin as soon as you enter, set to a very low volume so it stays subtle.
+      </p>
+      <button class="btn-primary entry-button" id="enterSiteButton" type="button">Enter Site</button>
+    </div>
+  </div>
+
+  <div id="youtubePlayer" class="youtube-player-shell" aria-hidden="true"></div>
 
   <main>
 
