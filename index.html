@@ -18,278 +18,292 @@
 
 <body>
 
-  <nav id="nav">
-    <a href="#home" class="nav-logo">FL</a>
-    <ul class="nav-links" id="navLinks">
-      <li><a href="#home">Home</a></li>
-      <li><a href="#about">About</a></li>
-      <li><a href="#skills">Skills</a></li>
-      <li><a href="#projects">Projects</a></li>
-      <li><a href="#contact">Contact</a></li>
-    </ul>
-    <button class="hamburger" id="hamburger" aria-label="Menu">
-      <span></span><span></span>
-    </button>
-  </nav>
-
-  <div class="mobile-menu" id="mobileMenu">
-    <a href="#home">Home</a>
-    <a href="#about">About</a>
-    <a href="#skills">Skills</a>
-    <a href="#projects">Projects</a>
-    <a href="#contact">Contact</a>
-  </div>
-
   <main>
 
-    <!-- HOME -->
-    <section id="home">
-      <div class="hero-left">
-        <span class="hero-tag reveal">BSc IT · 2nd Year · Kashmir</span>
-        <h1 class="hero-title reveal d1">
-          Faizaan<br><em>Lone.</em>
-        </h1>
-        <p class="hero-sub reveal d2">
-          A tech-curious student from Kashmir building practical skills across development, tools, and systems.
-        </p>
-        <div class="hero-cta reveal d3">
-          <a href="#contact" class="btn-primary">Get in Touch</a>
-          <a href="#about" class="btn-ghost">About Me →</a>
+    <!-- SIDEBAR -->
+    <aside class="sidebar" data-sidebar>
+      <div class="sidebar-info">
+        <figure class="avatar-box">
+          <img src="assets/photo.png" alt="Faizaan Lone" width="120" class="hero-photo">
+        </figure>
+        <div class="info-content">
+          <h1 class="name" title="Faizaan Lone">Faizaan Lone</h1>
+          <p class="title">BSc IT Student</p>
         </div>
+        <button class="info_more-btn" data-sidebar-btn aria-label="Show Contacts">
+          <span>Show Contacts</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        </button>
       </div>
 
-      <div class="hero-right reveal d2">
-        <div class="hero-photo-frame">
-          <img src="assets/photo.png" alt="Faizaan Lone" class="hero-photo" />
-        </div>
-        <div class="hero-detail">
-          <div class="detail-row">
-            <span class="detail-label">Location</span>
-            <span class="detail-val">Srinagar, Kashmir</span>
-          </div>
-          <div class="detail-row">
-            <span class="detail-label">Focus</span>
-            <span class="detail-val">Cybersecurity · Cloud</span>
-          </div>
-          <div class="detail-row">
-            <span class="detail-label">Status</span>
-            <span class="detail-val available">Open to opportunities</span>
-          </div>
-        </div>
+      <div class="sidebar-info_more">
+        <div class="separator"></div>
+        <ul class="contacts-list">
+          <li class="contact-item">
+            <div class="icon-box">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+            </div>
+            <div class="contact-info">
+              <p class="contact-title">Email</p>
+              <a href="mailto:faizanlone098@gmail.com" class="contact-link">faizanlone098@gmail.com</a>
+            </div>
+          </li>
+          <li class="contact-item">
+            <div class="icon-box">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+            </div>
+            <div class="contact-info">
+              <p class="contact-title">Phone</p>
+              <a href="tel:9103534xxx" class="contact-link">9103534xxx</a>
+            </div>
+          </li>
+          <li class="contact-item">
+            <div class="icon-box">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+            </div>
+            <div class="contact-info">
+              <p class="contact-title">Location</p>
+              <address>Srinagar, Kashmir</address>
+            </div>
+          </li>
+        </ul>
+        <div class="separator"></div>
+        <ul class="social-list">
+          <li class="social-item">
+            <a href="https://github.com/lonefaizaan" class="social-link" target="_blank">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+            </a>
+          </li>
+          <li class="social-item">
+            <a href="https://linkedin.com/in/lonefaizaan" class="social-link" target="_blank">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+            </a>
+          </li>
+        </ul>
       </div>
-    </section>
+    </aside>
 
-    <!-- ABOUT -->
-    <section id="about">
-      <div class="section-header reveal">
-        <span class="section-index">01</span>
-        <h2 class="section-title">About</h2>
-      </div>
-      <div class="about-grid">
-        <div class="about-text">
-          <p class="reveal d1">
+    <!-- MAIN CONTENT -->
+    <div class="main-content">
+
+      <!-- NAVBAR -->
+      <nav class="navbar">
+        <ul class="navbar-list">
+          <li class="navbar-item"><button class="navbar-link active" data-nav-link="about">About</button></li>
+          <li class="navbar-item"><button class="navbar-link" data-nav-link="resume">Resume</button></li>
+          <li class="navbar-item"><button class="navbar-link" data-nav-link="portfolio">Portfolio</button></li>
+          <li class="navbar-item"><button class="navbar-link" data-nav-link="contact">Contact</button></li>
+        </ul>
+      </nav>
+
+      <!-- ABOUT -->
+      <article class="about active" data-page="about">
+        <header>
+          <h2 class="h2 article-title">About Me</h2>
+        </header>
+        <section class="about-text">
+          <p>
             I'm Faizaan — a BSc IT student with a sharp interest in how technology works at every layer. I enjoy
             building things that solve real problems, learning tools hands-on, and understanding systems from the inside out.
           </p>
-          <p class="reveal d2">
+          <p>
             My focus right now is sharpening practical development skills and building a portfolio that speaks for
             itself. I believe in shipping, iterating, and learning from doing rather than waiting to be ready.
           </p>
-          <p class="reveal d3">
+          <p>
             Looking for opportunities where I can contribute meaningfully, grow fast, and work alongside people who care about craft.
           </p>
-          <div class="chips reveal d4">
-            <span class="chip">Problem Solver</span>
-            <span class="chip">Fast Learner</span>
-            <span class="chip">Detail-Oriented</span>
-            <span class="chip">Team Player</span>
-          </div>
-        </div>
-        <div class="about-stats reveal d2">
-          <div class="stat-card">
-            <div class="stat-val">2nd</div>
-            <div class="stat-lbl">Year · BSc IT</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-val">10+</div>
-            <div class="stat-lbl">Tools worked with</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-val">∞</div>
-            <div class="stat-lbl">Things to learn</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-val">1</div>
-            <div class="stat-lbl">Clear direction</div>
-          </div>
-        </div>
-      </div>
-    </section>
+        </section>
 
-    <!-- SKILLS -->
-    <section id="skills">
-      <div class="section-header reveal">
-        <span class="section-index">02</span>
-        <h2 class="section-title">Skills</h2>
-      </div>
-      <p class="section-sub reveal d1">Technologies and tools I work with — focused, practical, and growing.</p>
+        <!-- What I'm Doing -->
+        <section class="service">
+          <h3 class="h3 service-title">What I'm doing</h3>
+          <ul class="service-list">
+            <li class="service-item">
+              <div class="service-icon-box">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+              </div>
+              <div class="service-content-box">
+                <h4 class="h4 service-item-title">Web Development</h4>
+                <p class="service-item-text">Building responsive and modern interfaces with HTML, CSS, and JavaScript.</p>
+              </div>
+            </li>
+            <li class="service-item">
+              <div class="service-icon-box">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+              </div>
+              <div class="service-content-box">
+                <h4 class="h4 service-item-title">Systems & Tools</h4>
+                <p class="service-item-text">Working with Linux, Docker, and Git to manage and deploy applications.</p>
+              </div>
+            </li>
+          </ul>
+        </section>
 
-      <div class="skills-grid reveal d2">
-        <div class="skills-group">
-          <div class="sg-label">Languages</div>
-          <div class="skill-list">
-            <div class="skill-item">C</div>
-            <div class="skill-item">Java</div>
-            <div class="skill-item">Python</div>
-          </div>
-        </div>
-        <div class="skills-group">
-          <div class="sg-label">Web</div>
-          <div class="skill-list">
-            <div class="skill-item">HTML &amp; CSS</div>
-            <div class="skill-item">JavaScript</div>
-            <div class="skill-item">Responsive Design</div>
-          </div>
-        </div>
-        <div class="skills-group">
-          <div class="sg-label">Tools</div>
-          <div class="skill-list">
-            <div class="skill-item">Docker</div>
-            <div class="skill-item">Git &amp; GitHub</div>
-            <div class="skill-item">VS Code</div>
-          </div>
-        </div>
-        <div class="skills-group">
-          <div class="sg-label">Interests</div>
-          <div class="skill-list">
-            <div class="skill-item">Cybersecurity</div>
-            <div class="skill-item">Google Cloud</div>
-            <div class="skill-item">Linux</div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- PROJECTS -->
-    <section id="projects">
-      <div class="section-header reveal">
-        <span class="section-index">03</span>
-        <h2 class="section-title">Projects</h2>
-      </div>
-      <p class="section-sub reveal d1">
-        A growing set of hands-on builds where I design interfaces, shape the user flow, and turn ideas into working products.
-      </p>
-
-      <article class="project-showcase reveal d2">
-        <div class="project-copy">
-          <span class="project-kicker">Featured build</span>
-          <h3 class="project-title">SPCS Campus Portal</h3>
-          <p class="project-text">
-            A modern campus experience built for Sri Pratap College that rethinks the student journey across departments,
-            live campus posts, alumni networking, and secure admin access in one mobile-first interface.
-          </p>
-          <p class="project-text">
-            The product direction focused on a clean visual system, bold typography, and focused flows that make college
-            information feel organized instead of buried.
-          </p>
-
-          <div class="project-tags">
-            <span class="chip">UI Design</span>
-            <span class="chip">Mobile-First</span>
-            <span class="chip">Campus Portal</span>
-            <span class="chip">Case Study</span>
-          </div>
-
-          <div class="project-actions">
-            <a href="https://spcscampuscollege.vercel.app/" target="_blank" rel="noopener" class="btn-primary">
-              View Live Project
-            </a>
-            <a href="#contact" class="btn-ghost">Ask Me About This Build -></a>
-          </div>
-
-          <div class="project-meta">
-            <div class="project-meta-card">
-              <span class="project-meta-label">Highlights</span>
-              <p>Landing experience, live posts flow, alumni network, and an admin portal concept.</p>
-            </div>
-            <div class="project-meta-card">
-              <span class="project-meta-label">Ready to grow</span>
-              <p>This section is ready for more project URLs, deeper details, and extra screenshots as you add them.</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="project-slider-container">
-          <button class="slider-arrow prev" aria-label="Previous Project Image">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
-          </button>
-          
-          <div class="project-gallery">
-            <figure class="project-shot">
-              <img src="assets/project-spcs-home.jpg" alt="SPCS Campus home screen" />
-              <figcaption>Hero section introducing the campus portal and core navigation.</figcaption>
-            </figure>
-            <figure class="project-shot">
-              <img src="assets/project-spcs-posts.jpg" alt="SPCS Campus live student posts screen" />
-              <figcaption>Anonymous campus posts with a focused mobile interaction pattern.</figcaption>
-            </figure>
-            <figure class="project-shot">
-              <img src="assets/project-spcs-alumni.jpg" alt="SPCS Campus alumni network screen" />
-              <figcaption>Alumni networking built as a dedicated pathway instead of an afterthought.</figcaption>
-            </figure>
-            <figure class="project-shot">
-              <img src="assets/project-spcs-admin.jpg" alt="SPCS Campus secure admin portal screen" />
-              <figcaption>Secure admin access concept for managing internal college workflows.</figcaption>
-            </figure>
-          </div>
-
-          <button class="slider-arrow next" aria-label="Next Project Image">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
-          </button>
-        </div>
+        <!-- Stats -->
+        <section class="testimonials">
+          <h3 class="h3 testimonials-title">Highlights</h3>
+          <ul class="testimonials-list has-scrollbar">
+            <li class="testimonials-item">
+              <div class="content-card">
+                <h4 class="h4 testimonials-item-title">BSc IT Student</h4>
+                <p class="testimonials-text">Currently in my 2nd year at Sri Pratap College, Srinagar.</p>
+              </div>
+            </li>
+            <li class="testimonials-item">
+              <div class="content-card">
+                <h4 class="h4 testimonials-item-title">10+ Tools</h4>
+                <p class="testimonials-text">Hands-on experience with modern development and system tools.</p>
+              </div>
+            </li>
+          </ul>
+        </section>
       </article>
-    </section>
 
-    <!-- CONTACT -->
-    <section id="contact">
-      <div class="section-header reveal">
-        <span class="section-index">04</span>
-        <h2 class="section-title">Contact</h2>
-      </div>
-      <p class="section-sub reveal d1">Open to opportunities, collaborations, or a good tech conversation.</p>
+      <!-- RESUME -->
+      <article class="resume" data-page="resume">
+        <header>
+          <h2 class="h2 article-title">Resume</h2>
+        </header>
 
-      <div class="contact-grid reveal d2">
-        <a href="mailto:faizanlone098@gmail.com" class="contact-card">
-          <span class="contact-lbl">Email</span>
-          <span class="contact-val">faizanlone098@gmail.com</span>
-          <span class="contact-arrow">→</span>
-        </a>
-        <a href="https://github.com/lonefaizaan" target="_blank" rel="noopener" class="contact-card">
-          <span class="contact-lbl">GitHub</span>
-          <span class="contact-val">lonefaizaan</span>
-          <span class="contact-arrow">→</span>
-        </a>
-        <a href="https://linkedin.com/in/lonefaizaan" target="_blank" rel="noopener" class="contact-card">
-          <span class="contact-lbl">LinkedIn</span>
-          <span class="contact-val">lonefaizaan</span>
-          <span class="contact-arrow">→</span>
-        </a>
-        <a href="tel:9103534xxx" class="contact-card">
-          <span class="contact-lbl">Phone</span>
-          <span class="contact-val">9103534xxx</span>
-          <span class="contact-arrow">→</span>
-        </a>
-      </div>
-    </section>
+        <section class="timeline">
+          <div class="title-wrapper">
+            <div class="icon-box">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"></path><path d="M6 12v5c3 3 9 3 12 0v-5"></path></svg>
+            </div>
+            <h3 class="h3">Education</h3>
+          </div>
+          <ol class="timeline-list">
+            <li class="timeline-item">
+              <h4 class="h4 timeline-item-title">BSc IT — Sri Pratap College</h4>
+              <span>2024 — Present</span>
+              <p class="timeline-text">Focusing on information technology, programming, and system architectures.</p>
+            </li>
+          </ol>
+        </section>
+
+        <section class="skill">
+          <h3 class="h3 skills-title">My skills</h3>
+          <ul class="skills-list content-card">
+            <li class="skills-item">
+              <div class="title-wrapper">
+                <h5 class="h5">Languages (C, Java, Python)</h5>
+                <data value="80">80%</data>
+              </div>
+              <div class="skill-progress-bg">
+                <div class="skill-progress-fill" style="width: 80%;"></div>
+              </div>
+            </li>
+            <li class="skills-item">
+              <div class="title-wrapper">
+                <h5 class="h5">Web (HTML, CSS, JS)</h5>
+                <data value="90">90%</data>
+              </div>
+              <div class="skill-progress-bg">
+                <div class="skill-progress-fill" style="width: 90%;"></div>
+              </div>
+            </li>
+            <li class="skills-item">
+              <div class="title-wrapper">
+                <h5 class="h5">Tools (Docker, Git, Linux)</h5>
+                <data value="75">75%</data>
+              </div>
+              <div class="skill-progress-bg">
+                <div class="skill-progress-fill" style="width: 75%;"></div>
+              </div>
+            </li>
+          </ul>
+        </section>
+      </article>
+
+      <!-- PORTFOLIO -->
+      <article class="portfolio" data-page="portfolio">
+        <header>
+          <h2 class="h2 article-title">Portfolio</h2>
+        </header>
+        
+        <section class="projects">
+          <div class="project-slider-container">
+            <button class="slider-arrow prev" aria-label="Previous Project Image">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+            </button>
+            
+            <div class="project-gallery">
+              <figure class="project-shot">
+                <img src="assets/project-spcs-home.jpg" alt="SPCS Campus home screen" />
+                <figcaption>Hero section introducing the campus portal.</figcaption>
+              </figure>
+              <figure class="project-shot">
+                <img src="assets/project-spcs-posts.jpg" alt="SPCS Campus live student posts screen" />
+                <figcaption>Anonymous campus posts interaction.</figcaption>
+              </figure>
+              <figure class="project-shot">
+                <img src="assets/project-spcs-alumni.jpg" alt="SPCS Campus alumni network screen" />
+                <figcaption>Alumni networking pathway.</figcaption>
+              </figure>
+              <figure class="project-shot">
+                <img src="assets/project-spcs-admin.jpg" alt="SPCS Campus secure admin portal screen" />
+                <figcaption>Secure admin access concept.</figcaption>
+              </figure>
+            </div>
+
+            <button class="slider-arrow next" aria-label="Next Project Image">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            </button>
+          </div>
+
+          <div class="project-details content-card">
+            <h3 class="h3 project-title">SPCS Campus Portal</h3>
+            <p class="project-text">
+              A modern campus experience built for Sri Pratap College that rethinks the student journey across departments,
+              live campus posts, and alumni networking.
+            </p>
+            <div class="project-tags">
+              <span class="chip">UI Design</span>
+              <span class="chip">Mobile-First</span>
+              <span class="chip">Campus Portal</span>
+            </div>
+            <a href="https://spcscampuscollege.vercel.app/" target="_blank" rel="noopener" class="btn-primary">View Live Project</a>
+          </div>
+        </section>
+      </article>
+
+      <!-- CONTACT -->
+      <article class="contact" data-page="contact">
+        <header>
+          <h2 class="h2 article-title">Contact</h2>
+        </header>
+
+        <section class="mapbox">
+          <figure>
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d105655.8576403233!2d74.7244834!3d34.1593003!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x38e18f280a9e2247%3A0xc0c4516a504a50d4!2sSrinagar!5e0!3m2!1sen!2sin!4v1713360000000!5m2!1sen!2sin"
+              width="400" height="300" loading="lazy"></iframe>
+          </figure>
+        </section>
+
+        <section class="contact-form">
+          <h3 class="h3 form-title">Contact Form</h3>
+          <form action="#" class="form" data-form>
+            <div class="input-wrapper">
+              <input type="text" name="fullname" class="form-input" placeholder="Full name" required data-form-input>
+              <input type="email" name="email" class="form-input" placeholder="Email address" required data-form-input>
+            </div>
+            <textarea name="message" class="form-input" placeholder="Your Message" required data-form-input></textarea>
+            <button class="form-btn" type="submit" disabled data-form-btn>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+              <span>Send Message</span>
+            </button>
+          </form>
+        </section>
+      </article>
+
+    </div>
 
   </main>
-
-  <footer>
-    <span class="footer-copy">© 2025 Faizaan Lone</span>
-    <a href="#home" class="footer-back">Back to top ↑</a>
-  </footer>
 
   <script src="js/main.js"></script>
 
 </body>
+
 </html>
