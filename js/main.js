@@ -56,6 +56,7 @@ const sectionObserver = new IntersectionObserver(
 );
 sections.forEach((section) => sectionObserver.observe(section));
 
+/* ── Hero Tilt Effect ── */
 (function () {
   const frame = document.querySelector('.hero-photo-frame');
 
@@ -125,6 +126,57 @@ sections.forEach((section) => sectionObserver.observe(section));
     targetX = 0;
     targetY = 0;
     startTick();
+  });
+})();
+
+/* ── Project Slider ── */
+(function () {
+  const container = document.querySelector('.project-slider-container');
+  if (!container) return;
+
+  const gallery = container.querySelector('.project-gallery');
+  const slides = container.querySelectorAll('.project-shot');
+  const prevBtn = container.querySelector('.slider-arrow.prev');
+  const nextBtn = container.querySelector('.slider-arrow.next');
+  
+  let currentIndex = 0;
+  const totalSlides = slides.length;
+
+  function updateSlider() {
+    gallery.style.transform = `translateX(-${currentIndex * 100}%)`;
+  }
+
+  function nextSlide() {
+    currentIndex = (currentIndex + 1) % totalSlides;
+    updateSlider();
+  }
+
+  function prevSlide() {
+    currentIndex = (currentIndex - 1 + totalSlides) % totalSlides;
+    updateSlider();
+  }
+
+  nextBtn.addEventListener('click', nextSlide);
+  prevBtn.addEventListener('click', prevSlide);
+
+  // Optional: Keyboard navigation
+  container.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowLeft') prevSlide();
+    if (e.key === 'ArrowRight') nextSlide();
+  });
+
+  // Touch support
+  let touchStartX = 0;
+  let touchEndX = 0;
+
+  container.addEventListener('touchstart', (e) => {
+    touchStartX = e.changedTouches[0].screenX;
+  });
+
+  container.addEventListener('touchend', (e) => {
+    touchEndX = e.changedTouches[0].screenX;
+    if (touchStartX - touchEndX > 50) nextSlide();
+    if (touchEndX - touchStartX > 50) prevSlide();
   });
 })();
 
