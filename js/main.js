@@ -1,165 +1,120 @@
-'use strict';
-
 /**
- * Sidebar toggle for mobile
+ * AURORA GLASS — VIBRANT PORTFOLIO LOGIC
  */
-const sidebar = document.querySelector("[data-sidebar]");
-const sidebarBtn = document.querySelector("[data-sidebar-btn]");
 
-sidebarBtn.addEventListener("click", function () {
-  sidebar.classList.toggle("active");
-});
+document.addEventListener('DOMContentLoaded', () => {
 
-/**
- * Tab Navigation
- */
-const navigationLinks = document.querySelectorAll("[data-nav-link]");
-const pages = document.querySelectorAll("[data-page]");
-
-for (let i = 0; i < navigationLinks.length; i++) {
-  navigationLinks[i].addEventListener("click", function () {
-    for (let j = 0; j < pages.length; j++) {
-      if (this.innerHTML.toLowerCase() === pages[j].dataset.page) {
-        pages[j].classList.add("active");
-        navigationLinks[j].classList.add("active");
-        window.scrollTo(0, 0);
-      } else {
-        pages[j].classList.remove("active");
-        navigationLinks[j].classList.remove("active");
-      }
-    }
-  });
-}
-
-/**
- * Contact Form Validation
- */
-const form = document.querySelector("[data-form]");
-const formInputs = document.querySelectorAll("[data-form-input]");
-const formBtn = document.querySelector("[data-form-btn]");
-
-for (let i = 0; i < formInputs.length; i++) {
-  formInputs[i].addEventListener("input", function () {
-    if (form.checkValidity()) {
-      formBtn.removeAttribute("disabled");
-    } else {
-      formBtn.setAttribute("disabled", "");
-    }
-  });
-}
-
-/**
- * Project Slider
- */
-(function () {
-  const container = document.querySelector('.project-slider-container');
-  if (!container) return;
-
-  const gallery = container.querySelector('.project-gallery');
-  const slides = container.querySelectorAll('.project-shot');
-  const prevBtn = container.querySelector('.slider-arrow.prev');
-  const nextBtn = container.querySelector('.slider-arrow.next');
+  /**
+   * Reveal Animations on Scroll
+   */
+  const revealElements = document.querySelectorAll('.reveal');
   
-  let currentIndex = 0;
-  const totalSlides = slides.length;
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.1 });
 
-  function updateSlider() {
-    gallery.style.transform = `translateX(-${currentIndex * 100}%)`;
-  }
+  revealElements.forEach(el => revealObserver.observe(el));
 
-  function nextSlide() {
-    currentIndex = (currentIndex + 1) % totalSlides;
-    updateSlider();
-  }
 
-  function prevSlide() {
-    currentIndex = (currentIndex - 1 + totalSlides) % totalSlides;
-    updateSlider();
-  }
+  /**
+   * Dock Navigation Active State
+   */
+  const sections = document.querySelectorAll('section');
+  const dockLinks = document.querySelectorAll('.dock-link');
 
-  nextBtn.addEventListener('click', nextSlide);
-  prevBtn.addEventListener('click', prevSlide);
+  window.addEventListener('scroll', () => {
+    let current = "";
+    sections.forEach(section => {
+      const sectionTop = section.offsetTop;
+      const sectionHeight = section.clientHeight;
+      if (pageYOffset >= sectionTop - sectionHeight / 3) {
+        current = section.getAttribute('id');
+      }
+    });
 
-  // Keyboard navigation
-  container.addEventListener('keydown', (e) => {
-    if (e.key === 'ArrowLeft') prevSlide();
-    if (e.key === 'ArrowRight') nextSlide();
+    dockLinks.forEach(link => {
+      link.classList.remove('active');
+      if (link.getAttribute('href').includes(current)) {
+        link.classList.add('active');
+      }
+    });
   });
 
-  // Touch support
-  let touchStartX = 0;
-  let touchEndX = 0;
 
-  container.addEventListener('touchstart', (e) => {
-    touchStartX = e.changedTouches[0].screenX;
+  /**
+   * Aurora Blobs Mouse Tracking (Subtle Interactivity)
+   */
+  const auroraContainer = document.querySelector('.aurora-container');
+  const blobs = document.querySelectorAll('.aurora-blob');
+
+  document.addEventListener('mousemove', (e) => {
+    const x = e.clientX / window.innerWidth;
+    const y = e.clientY / window.innerHeight;
+
+    blobs.forEach((blob, index) => {
+      const speed = (index + 1) * 20;
+      const xOffset = (x - 0.5) * speed;
+      const yOffset = (y - 0.5) * speed;
+      blob.style.transform = `translate(${xOffset}px, ${yOffset}px)`;
+    });
   });
 
-  container.addEventListener('touchend', (e) => {
-    touchEndX = e.changedTouches[0].screenX;
-    if (touchStartX - touchEndX > 50) nextSlide();
-    if (touchEndX - touchStartX > 50) prevSlide();
-  });
-})();
 
-/**
- * Avatar Tilt Effect (Optimized for new sidebar)
- */
-(function () {
-  const frame = document.querySelector('.avatar-box');
-  if (!frame) return;
+  /**
+   * Hero Image Tilt Effect
+   */
+  const heroCard = document.querySelector('.hero-card');
+  if (heroCard) {
+    heroCard.addEventListener('mousemove', (e) => {
+      const rect = heroCard.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      
+      const centerX = rect.width / 2;
+      const centerY = rect.height / 2;
+      
+      const rotateX = (y - centerY) / 10;
+      const rotateY = (centerX - x) / 10;
+      
+      heroCard.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.02)`;
+    });
 
-  const MAX_TILT = 10;
-  const STIFFNESS = 0.1;
-  const DAMPING = 0.72;
-
-  let targetX = 0;
-  let targetY = 0;
-  let currentX = 0;
-  let currentY = 0;
-  let velX = 0;
-  let velY = 0;
-  let rafId = null;
-
-  function tick() {
-    const ax = (targetX - currentX) * STIFFNESS;
-    const ay = (targetY - currentY) * STIFFNESS;
-    velX = velX * DAMPING + ax;
-    velY = velY * DAMPING + ay;
-    currentX += velX;
-    currentY += velY;
-
-    frame.style.transform = `perspective(600px) rotateX(${currentX.toFixed(3)}deg) rotateY(${currentY.toFixed(3)}deg)`;
-
-    const settled = Math.abs(currentX - targetX) < 0.01 && Math.abs(currentY - targetY) < 0.01 && Math.abs(velX) < 0.01 && Math.abs(velY) < 0.01;
-
-    if (!settled) {
-      rafId = requestAnimationFrame(tick);
-    } else {
-      currentX = targetX;
-      currentY = targetY;
-      velX = 0;
-      velY = 0;
-      frame.style.transform = `perspective(600px) rotateX(${currentX.toFixed(3)}deg) rotateY(${currentY.toFixed(3)}deg)`;
-      rafId = null;
-    }
+    heroCard.addEventListener('mouseleave', () => {
+      heroCard.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) scale(1)`;
+    });
   }
 
-  function startTick() {
-    if (!rafId) rafId = requestAnimationFrame(tick);
+
+  /**
+   * Simple Form Handling
+   */
+  const contactForm = document.querySelector('.contact-form');
+  if (contactForm) {
+    contactForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const btn = contactForm.querySelector('button');
+      const originalText = btn.innerText;
+      
+      btn.innerText = 'Sending...';
+      btn.disabled = true;
+
+      // Simulate sending
+      setTimeout(() => {
+        btn.innerText = 'Message Sent!';
+        btn.style.background = 'var(--accent-2)';
+        contactForm.reset();
+        
+        setTimeout(() => {
+          btn.innerText = originalText;
+          btn.style.background = 'var(--accent-1)';
+          btn.disabled = false;
+        }, 3000);
+      }, 1500);
+    });
   }
 
-  frame.addEventListener('mousemove', (event) => {
-    const rect = frame.getBoundingClientRect();
-    const nx = ((event.clientX - rect.left) / rect.width - 0.5) * 2;
-    const ny = ((event.clientY - rect.top) / rect.height - 0.5) * 2;
-    targetX = -ny * MAX_TILT;
-    targetY = nx * MAX_TILT;
-    startTick();
-  });
-
-  frame.addEventListener('mouseleave', () => {
-    targetX = 0;
-    targetY = 0;
-    startTick();
-  });
-})();
+});
